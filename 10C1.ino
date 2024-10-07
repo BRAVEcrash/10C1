@@ -4,10 +4,10 @@
 #define PIN_SERVO 10
 
 Servo myServo;
-unsigned long MOVING_TIME = 3000;
+unsigned long MOVING_TIME = 1000;
 unsigned long moveStartTime;
 int startAngle = 30;
-int stopAngle = 90;
+int stopAngle = 90;  
 bool movingForward = true;
 
 float sigmoid(float x) {
@@ -16,8 +16,9 @@ float sigmoid(float x) {
 
 void setup() {
   myServo.attach(PIN_SERVO);
-  moveStartTime = millis();
-  myServo.write(startAngle);
+  moveStartTime = millis(); 
+
+  myServo.write(startAngle); 
   delay(500);
 }
 
@@ -25,6 +26,7 @@ void loop() {
   unsigned long progress = millis() - moveStartTime;
 
   if (progress <= MOVING_TIME) {
+   
     float normalizedProgress = (float)progress / MOVING_TIME * 12 - 6;
     float sigmoidValue = sigmoid(normalizedProgress);
 
@@ -36,6 +38,7 @@ void loop() {
     }
     myServo.write(angle);
   } else {
+   
     movingForward = !movingForward;
     moveStartTime = millis();
   }
